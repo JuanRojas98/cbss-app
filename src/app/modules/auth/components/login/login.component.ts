@@ -4,19 +4,23 @@ import {Router} from "@angular/router";
 import {MatInputModule} from "@angular/material/input";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {AuthService} from "@services/auth.service";
+import {User} from "@models/user";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatIconModule, MatButtonModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
-  showPassword = false;
+  showSpinner = false;
 
   loginForm = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -25,12 +29,22 @@ export class LoginComponent {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.getRawValue());
-      alert('Entro!!');
+      const {email, password} = this.loginForm.getRawValue();
+      this.authService.login(email, password).subscribe(
+        (res: User) => {
+          this.authService.setAceessToken(res.accessToken);
+          this.authService.setRefreshToken(res.refreshToken);
+          this.authService.setUser(res)
+
+          this.router.navigate(['/admin']);
+        },
+        (err) => {
+          alert('Error al iniciar sesión');
+        }
+      );
     }
     else {
       this.loginForm.markAllAsTouched();
-      console.log('Error');
     }
   }
 }

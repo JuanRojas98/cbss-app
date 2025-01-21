@@ -1,0 +1,44 @@
+/*
+Variables
+*/
+
+/*
+  Colors Theme
+ */
+$blue-dark: #002952;
+$yellow: #ffc72c;
+$green-light: #48cfb2;
+$green-semi-light: #15d064;
+$red-dark: #bd0c0c;
+$white: #ffffff;
+$black: #000000;
+$gray: #666666;
+$gray-dark-c: #454545;
+$gray-light: #F2F2F2;
+$gray-extra-light: #f2f2f2;
+$body-color: #f3f3f3;
+$theme-color: #243f52;
+
+/*
+  Forms variables
+ */
+$color-label: $gray-dark-c;
+$required-label: $red-dark;
+$bg-btn: #243f52;
+$border-btn: #243f52;
+
+/*
+  Transition
+ */
+$tran-02: all 0.2s ease;
+$tran-03: all 0.3s ease;
+$tran-04: all 0.4s ease;
+$tran-05: all 0.5s ease;
+
+//Typography
+$font-family-sans-serif: "Montserrat Regular", sans-serif;
+
+$grid-breakpoints: (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px, xxl: 1440px, xxxl: 1600px) !default;
+
+//Font awesome default font path.
+//$fa-font-path: "../assets/fonts" !default;
