@@ -1,0 +1,10 @@
+.footer {
+  min-height: calc(3rem + 1px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f7;
+  border-top: 1px solid #dbdfe6;
+}

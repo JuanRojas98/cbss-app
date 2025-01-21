@@ -1,0 +1,20 @@
+<div class="main-container w-100 h-100">
+  <app-sidebar></app-sidebar>
+  <div class="wrapper-container d-flex flex-column min-vh-100">
+    <app-navbar></app-navbar>
+    <div class="px-4 container-lg h-auto flex-grow-1">
+      <router-outlet></router-outlet>
+      <div class="card">
+        <div class="card-header">
+          Featured
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>
