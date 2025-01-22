@@ -12,52 +12,71 @@
               Producto
               <span class="required">*</span>
             </label>
-            <input type="text" class="form-control"
-                 formControlName="name" id="name">
+            <input type="text" class="form-control" formControlName="name" id="name" required>
             @if (productForm.get('name')?.touched && productForm.get('name')?.hasError('required')) {
-              <span class="text-danger fw-bold w-100" style="font-size: 0.9rem">
+              <span class="error-field">
                 Ingrese el nombre del producto.
               </span>
             }
-          </div>
-          <div class="col-12 col-md-6 mb-3">
-            <label for="description" class="form-label">
-              Descripción
-              <span class="required">*</span>
-            </label>
-            <input type="text" class="form-control" formControlName="description" id="description">
           </div>
           <div class="col-12 col-md-6 mb-3">
             <label for="category_id" class="form-label">
               Categoria
               <span class="required">*</span>
             </label>
-            <select class="form-select" id="category_id" formControlName="category_id">
-              <option value selected>--Seleccione--</option>
+            <select class="form-select" id="category_id" formControlName="category_id" required>
+              <option [ngValue]="0" selected>--Seleccione--</option>
+              @for ( category of categories; track category.id ) {
+                <option [ngValue]="category.id">{{category.name}}</option>
+              }
             </select>
+            @if (productForm.get('category_id')?.touched && productForm.get('category_id')?.hasError('required')) {
+              <span class="error-field">
+                Seleccione una categoria.
+              </span>
+            }
           </div>
-          <div class="col-12 col-md-6 mb-3">
-            <label for="brand_id" class="form-label">
-              Marca
+          <div class="col-12 mb-3">
+            <label for="description" class="form-label">
+              Descripción
               <span class="required">*</span>
             </label>
-            <select class="form-select" id="brand_id" formControlName="brand_id">
-              <option value selected>--Seleccione--</option>
-            </select>
+            <input type="text" class="form-control" formControlName="description" id="description"
+                   required>
+            @if (productForm.get('description')?.touched && productForm.get('description')?.hasError('required')) {
+              <span class="error-field">
+                Ingrese una descripción.
+              </span>
+            }
           </div>
           <div class="col-12 col-md-6 mb-3">
             <label for="quantity" class="form-label">
               Cantidad
               <span class="required">*</span>
             </label>
-            <input type="number" class="form-control" id="quantity" formControlName="quantity" min="0" pattern="[0-9]">
+            <input type="number" class="form-control" id="quantity" formControlName="quantity" min="1" required>
+            @if (productForm.get('quantity')?.touched && productForm.get('quantity')?.hasError('required')) {
+              <span class="error-field">
+                Ingrese una cantidad.
+              </span>
+            }
+            @if (productForm.get('quantity')?.touched && productForm.get('quantity')?.hasError('min')) {
+              <span class="error-field">
+                La cantidad debe ser minimo de 1 en adelante.
+              </span>
+            }
           </div>
           <div class="col-12 col-md-6 mb-3">
             <label for="price" class="form-label">
               Precio por unidad
               <span class="required">*</span>
             </label>
-            <input type="number" class="form-control" id="price" formControlName="price">
+            <input type="number" class="form-control" id="price" formControlName="price" required>
+            @if (productForm.get('price')?.touched && productForm.get('price')?.hasError('required')) {
+              <span class="error-field">
+                Ingrese un precio.
+              </span>
+            }
           </div>
           <div class="col-12">
             <button type="submit" class="btn btn-primary btn-form-app rounded px-4">Guardar</button>

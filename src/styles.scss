@@ -114,14 +114,92 @@ body {
   }
 }
 
+.error-field {
+  width: 100%;
+  font-family: "Montserrat Bold", sans-serif;
+  font-size: 0.9rem;
+  color: $red-custom;
+}
+
+.ng-touched.ng-invalid:not(form)  {
+  border: 1px solid $red-custom; /* red */
+}
+
+/*
+  Table styles
+ */
+.table-responsive {
+  &::-webkit-scrollbar{width:5px;height:8px}
+  &::-webkit-scrollbar-thumb{background:#c6c3c3;border-radius:4px}
+  &::-webkit-scrollbar-thumb:hover{background:#b3b3b3;box-shadow:0 0 2px 1px rgba(0,0,0,.2)}
+  &::-webkit-scrollbar-thumb:active{background-color:#999}
+
+  .table {
+    margin-bottom: 0;
+    border-radius: 1rem;
+    border: 0px solid #ffffff;
+
+    thead {
+      background: $theme-color;
+      //border-top-left-radius: 1rem;
+      //border-top-right-radius: 1rem;
+
+      tr {
+        //border-top-left-radius: 1rem;
+        //border-top-right-radius: 1rem;
+
+        th {
+          font-family: "Montserrat Bold", sans-serif;
+          font-size: 1rem;
+          color: $white;
+          font-weight: normal;
+          text-align: center;
+          vertical-align: middle;
+
+          //&:first-child {
+          //  border-top-left-radius: 1rem;
+          //}
+          //
+          //&:last-child {
+          //  border-top-right-radius: 1rem;
+          //}
+        }
+      }
+    }
+
+    tbody {
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+
+      tr {
+        border: 1px solid #dee2e6;
+
+        td {
+          font-family: "Montserrat Regular", sans-serif;
+          font-size: 1rem;
+          vertical-align: middle;
+          text-align: center;
+          color: $gray;
+
+          &:first-child {
+            font-family: "Montserrat Bold", sans-serif;
+          }
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 1rem;
+          border-bottom-right-radius: 1rem;
+        }
+      }
+    }
+  }
+}
+
+
 //.ng-valid[required], .ng-valid.required  {
 //  border-left: 5px solid #42A948; /* green */
 //}
-//
-//.ng-invalid:not(form)  {
-//  border: 1px solid #a94442; /* red */
-//}
-//
+
 //input.ng-pristine.ng-invalid {
 //  -webkit-box-shadow: none;
 //  -ms-box-shadow: none;

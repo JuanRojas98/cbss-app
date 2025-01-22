@@ -1,7 +1,9 @@
-import {Component, inject} from '@angular/core';
-import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, inject, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User} from "@models/user";
+import {ProductService} from "@services/product.service";
+import {Category, Product} from "@models/product";
 
 @Component({
   selector: 'app-create',
@@ -12,36 +14,41 @@ import {User} from "@models/user";
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit{
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
+  private productService = inject(ProductService);
+
+  categories: Category[] = [];
 
   productForm = this.formBuilder.nonNullable.group({
     name: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    category_id: ['', [Validators.required]],
-    brand_id: ['', [Validators.required]],
-    quantity: ['', [Validators.required, Validators.minLength(1)]],
-    price: ['', [Validators.required]]
+    category_id: [0, [Validators.required]],
+    quantity: [1, [Validators.required, Validators.min(1)]],
+    price: [1, [Validators.required]]
   });
+
+  ngOnInit() {
+    this.productService.getCategories().subscribe(
+      (data: Category[]) => {
+        this.categories = data;
+      }
+    );
+  }
 
   onSubmit() {
     if (this.productForm.valid) {
-      // const {email, password} = this.loginForm.getRawValue();
-      // this.authService.login(email, password).subscribe(
-      //   (res: User) => {
-      //     this.authService.setAceessToken(res.accessToken);
-      //     this.authService.setRefreshToken(res.refreshToken);
-      //     this.authService.setUser(res)
-      //
-      //     this.router.navigate(['/admin']);
-      //   },
-      //   (err) => {
-      //     alert('Error al iniciar sesión');
-      //   }
-      // );
-
-      console.log(this.productForm.getRawValue());
+      const product = this.productForm.value as Product;
+      this.productService.createProduct(product).subscribe(
+        (res: any) => {
+          alert(res.message);
+          this.productForm.reset();
+        },
+        (error) => {
+          alert('Error al crear el producto.');
+        }
+      );
     }
     else {
       this.productForm.markAllAsTouched();

@@ -11,33 +11,31 @@
               <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
                 <div class="input-group mb-3 has-validation">
                   <span class="input-group-text">&#64;</span>
-                  <input matInput type="email" id="email" formControlName="email" class="form-control"
-                         [className]="(loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) ? 'form-control border-danger' : 'form-control'"
+                  <input type="email" id="email" formControlName="email" class="form-control"
                          placeholder="Correo electronico" autocomplete="off" required>
                   @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('email')) {
-                    <span class="text-danger fw-bold w-100" style="font-size: 0.9rem">
+                    <span class="error-field">
                       Por favor ingrese un correo electrónico valido.
                     </span>
                   }
                   @if (loginForm.get('email')?.touched && loginForm.get('email')?.hasError('required')) {
-                    <span class="text-danger fw-bold w-100" style="font-size: 0.9rem">
+                    <span class="error-field">
                       Por favor ingrese un correo electrónico.
                     </span>
                   }
                 </div>
                 <div class="input-group mb-3 has-validation">
                   <span class="input-group-text">&#64;</span>
-                  <input matInput type="password" id="password" formControlName="password" class="form-control"
-                         [className]="( loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required') ) ? 'form-control border-danger' : 'form-control'"
+                  <input type="password" id="password" formControlName="password" class="form-control"
                          placeholder="Contraseña" autocomplete="off" required>
                   @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')) {
-                    <span class="text-danger fw-bold w-100" style="font-size: 0.9rem">
+                    <span class="error-field">
                       La contraseña debe tener al menos 6 caracteres.
                     </span>
                   }
 
                   @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
-                    <span class="text-danger fw-bold w-100" style="font-size: 0.9rem">
+                    <span class="error-field">
                       Por favor ingrese una contraseña.
                     </span>
                   }
