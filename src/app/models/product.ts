@@ -12,5 +12,6 @@ export interface Product {
 export interface Category {
   id: number;
   name: string;
+  total_products?: number;
   status: number;
 }

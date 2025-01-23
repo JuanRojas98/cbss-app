@@ -12,11 +12,11 @@ export const productsRoutes: Routes = [
     component: CreateComponent
   },
   {
-    path: 'brands',
+    path: 'categories',
     children: [
       {
-        path: 'create',
-        loadComponent: () => import('./brands/components/create/create.component').then( comp => comp.CreateComponent )
+        path: '',
+        loadComponent: () => import('./categories/components/list/list.component').then( comp => comp.ListComponent )
       }
     ]
   }

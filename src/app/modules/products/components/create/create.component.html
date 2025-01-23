@@ -25,7 +25,7 @@
               <span class="required">*</span>
             </label>
             <select class="form-select" id="category_id" formControlName="category_id" required>
-              <option [ngValue]="0" selected>--Seleccione--</option>
+              <option value selected>--Seleccione--</option>
               @for ( category of categories; track category.id ) {
                 <option [ngValue]="category.id">{{category.name}}</option>
               }

@@ -53,6 +53,7 @@
 @import "@fortawesome/fontawesome-free/scss/regular";
 @import "@fortawesome/fontawesome-free/scss/solid";
 @import "@fortawesome/fontawesome-free/scss/brands";
+@import "sweetalert2/src/sweetalert2";
 
 html, body {
   width: 100%;
@@ -140,7 +141,7 @@ body {
     border: 0px solid #ffffff;
 
     thead {
-      background: $theme-color;
+      background: $theme-color-2;
       //border-top-left-radius: 1rem;
       //border-top-right-radius: 1rem;
 
@@ -179,7 +180,7 @@ body {
           font-size: 1rem;
           vertical-align: middle;
           text-align: center;
-          color: $gray;
+          color: $black;
 
           &:first-child {
             font-family: "Montserrat Bold", sans-serif;
@@ -195,13 +196,112 @@ body {
   }
 }
 
+.actions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 
-//.ng-valid[required], .ng-valid.required  {
-//  border-left: 5px solid #42A948; /* green */
-//}
+  li {
+    margin-right: 0.5rem;
 
-//input.ng-pristine.ng-invalid {
-//  -webkit-box-shadow: none;
-//  -ms-box-shadow: none;
-//  box-shadow:none;
-//}
+    .btn-action {
+      width: 35px;
+      height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $white;
+      background-color: $theme-color-2;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: .3s all;
+
+      &:hover {
+        background-color: $theme-color;
+        transition: .3s all;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+/*
+  Sweet alert styles
+ */
+.swal2-popup {
+  border-radius: 1rem !important;
+}
+
+.swal2-confirm, .swal2-cancel, .swal2-deny {
+  /*width: 100%;*/
+  /*height: 100%;*/
+  font-family: "Montserrat Bold", sans-serif;
+  color: $white !important;
+  padding: 0.7rem 1rem;
+  margin: 0;
+}
+
+.swal2-title {
+  font-family: "Montserrat Bold", sans-serif;
+}
+
+.swal2-html-container {
+  font-family: "Montserrat Regular", sans-serif;
+}
+
+.swal2-cancel {
+  background-color: $red !important;
+}
+
+.swal2-confirm {
+  background-color: $green !important;
+}
+
+.swal2-deny {
+  background-color: $yellow !important;
+}
+
+.swal2-actions {
+  width: 50%;
+  justify-content: space-around;
+}
+
+body.swal2-height-auto {
+  height: 100% !important;
+}
+
+/*
+  Popup styles
+ */
+.modal-app {
+  .mdc-dialog__container {
+    .mat-mdc-dialog-surface {
+      padding: 1rem;
+      background-color: $white;
+      border-radius: 1rem;
+      width: 100%;
+
+      @include media-breakpoint-up(mg) {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.custom-loader {
+  animation: none !important;
+  border: 0 !important;
+  width: auto !important;
+  height: auto !important;
+
+  .spinner-border {
+    color: $theme-color-2 !important;
+  }
+}
+

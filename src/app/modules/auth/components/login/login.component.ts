@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, Validators, ReactiveFormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
 import {MatInputModule} from "@angular/material/input";
@@ -15,7 +15,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -26,6 +26,12 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
+
+  ngOnInit() {
+      if (this.authService.getAceessToken()) {
+          this.router.navigate(['admin']);
+      }
+  }
 
   onSubmit(): void {
     if (this.loginForm.valid) {

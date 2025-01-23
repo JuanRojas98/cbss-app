@@ -8,68 +8,17 @@ import {
 import {catchError, Observable, switchMap, throwError} from 'rxjs';
 import {Router} from "@angular/router";
 import {AuthService} from "@services/auth.service";
+import {AlertService} from "@services/alert.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-    refresh = false;
-
     constructor(
         private router: Router,
         private authService: AuthService,
-        private http: HttpClient
+        private http: HttpClient,
+        private alertService: AlertService
     ) {
     }
-
-    // intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    //     const accessToken = this.authService.getAceessToken();
-    //
-    //     if ( accessToken ) {
-    //         const req = request.clone({
-    //             setHeaders: {
-    //                 Accept: 'application/json',
-    //                 'Content-Type': 'application/json',
-    //                 Authorization: `Bearer ${this.authService.getAceessToken()}`
-    //             }
-    //         });
-    //
-    //         return next.handle(req).pipe(catchError((err: HttpErrorResponse) => {
-    //             if (( err.status === 401 || err.status === 403 ) && !this.refresh) {
-    //                 this.refresh = true;
-    //                 const refreshToken = this.authService.getRefreshToken();
-    //
-    //                 return this.http.post('/users/refresh',
-    //                     {
-    //                         token: refreshToken
-    //                     }
-    //                 ).pipe(
-    //                     switchMap((res: any) => {
-    //                         const newAccessToken = res.accessToken;
-    //                         this.authService.setAceessToken(newAccessToken);
-    //
-    //                         return next.handle(request.clone({
-    //                             setHeaders: {
-    //                                 Accept: 'application/json',
-    //                                 'Content-Type': 'application/json',
-    //                                 Authorization: `Bearer ${newAccessToken}`
-    //                             }
-    //                         }));
-    //                     }),
-    //                     catchError((error) => {
-    //                         this.refresh = false;
-    //                         this.authService.logout();
-    //
-    //                         return throwError(() => error);
-    //                     })
-    //                 ) as Observable<HttpEvent<any>>;
-    //             }
-    //
-    //             this.refresh = false;
-    //             return throwError(() => err);
-    //         }));
-    //     }
-    //
-    //     return next.handle(request);
-    // }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         const req = request.clone({
@@ -81,46 +30,54 @@ export class AuthInterceptor implements HttpInterceptor {
         });
 
         return next.handle(req).pipe(
-            catchError((error) => {
-                if (
-                    error instanceof HttpErrorResponse &&
-                    !req.url.includes('users/login') &&
-                    error.status === 401
-                ) {
-                    return this.handle401Error(req, next);
+            catchError((error: HttpErrorResponse) => {
+                if (error.status === 401) {
+                    return this.authService.refreshToken().pipe(
+                        switchMap((res: any) => {
+                            this.authService.setAceessToken(res.accessToken);
+
+                            const newReq = req.clone({
+                                setHeaders: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json',
+                                    Authorization: `Bearer ${res.accessToken}`
+                                }
+                            });
+
+                            return next.handle(newReq);
+                        }),
+                        catchError((err) => {
+                            const finalError = new Error(err);
+
+                            this.alertService.error('Su sesión ha caducado. Vuelva a iniciar sesión.');
+                            this.authService.logout();
+
+                            return throwError(() => err);
+                        })
+                    );
                 }
 
+                this.customAlertError(error.status, error.error.message);
                 return throwError(() => error);
             })
         );
     }
 
-    private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
-        if (!this.refresh) {
-            this.refresh = true;
+    private customAlertError(status_code: number, messsage: string) {
+        let error_message = '';
 
-            if (this.authService.getAceessToken()) {
-                return this.authService.refreshToken().pipe(
-                    switchMap((res: any) => {
-                        const newAccessToken = res.accessToken;
-                        this.authService.setAceessToken(newAccessToken);
-                        this.refresh = false;
-
-                        return next.handle(request);
-                    }),
-                    catchError((error) => {
-                        this.refresh = false;
-
-                        if (error.status == '403') {
-                            this.authService.logout();
-                        }
-
-                        return throwError(() => error);
-                    })
-                );
-            }
+        switch (status_code) {
+            case 404:
+                error_message = ! messsage ? messsage : 'Se ha presentando un error en el sistema. Contáctese con el adminsitrador. <br> Código error: ' + status_code;
+                break;
+            case 500:
+                error_message = 'Se ha presentando un error en el sistema. Contáctese con el adminsitrador. <br> Código error: ' + status_code;
+                break;
+            default:
+                error_message = 'Se ha presentando un error en el sistema. Contáctese con el adminsitrador. <br> Código error: ' + status_code;
+                break;
         }
 
-        return next.handle(request);
+        this.alertService.error(error_message);
     }
 }

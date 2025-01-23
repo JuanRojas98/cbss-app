@@ -6,6 +6,8 @@ import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {TableDataSource} from "../../../../utils/data-source";
+import {AlertService} from "@services/alert.service";
+import {SpinnerService} from "@services/spinner.service";
 
 @Component({
   selector: 'app-list',
@@ -21,40 +23,69 @@ import {TableDataSource} from "../../../../utils/data-source";
 })
 export class ListComponent implements OnInit{
   private productService = inject(ProductService);
+  private alertService = inject(AlertService);
+  private spinnerService = inject(SpinnerService);
 
   categories: Category[] = [];
-  products: Product[] = [];
 
-  displayedColumns: string[] = ['id', 'name', 'category_name', 'quantity', 'quantity_sold', 'price'];
+  displayedColumns: string[] = ['id', 'name', 'category_name', 'quantity', 'quantity_sold', 'price', 'actions'];
   dataSource = new MatTableDataSource<Product>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   // @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit() {
-    this.productService.getProducts().subscribe(
-      (data: Product[]) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-      },
-      (error) => {
-        alert('Error al obtener lista de productos');
-      }
-    )
-  }
+  // Default filter criteria for each field
+  nameFilter: string = '';
+  categoryFilter: string = '';
 
-  getCategoryList() {
+  ngOnInit() {
+    this.spinnerService.showSpinner();
+
     this.productService.getCategories().subscribe(
       (data: Category[]) => {
         this.categories = data;
+
+        this.productService.getProducts().subscribe(
+          (data: Product[]) => {
+            this.dataSource.data = data;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.filterPredicate = this.createFilter();
+
+            this.spinnerService.hideSpinner();
+          },
+          (error) => {
+            this.spinnerService.hideSpinner();
+          }
+        );
+      },
+      (error) => {
+        this.spinnerService.hideSpinner();
       }
     )
   }
 
-  filterProducts(value: any) {
-    const data = value.target.value;
-    value = data.trim(); // Remove whitespace
-    value = data.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = data;
+  createFilter(): (data: any, filter: string) => boolean {
+    const filterFunction = (data: any, filter: string) => {
+      const filterArray = filter.split('|');
+      const nameFilter = filterArray[0].toLowerCase();
+      const categoryFilter = filterArray[1];
+      // const cityFilter = filterArray[2].toLowerCase();
+
+      // Apply individual field filters
+      const matchesName = data.name.toLowerCase().includes(nameFilter);
+      const matchesCategory = data.category_id.toString().includes(categoryFilter);
+      // const matchesCity = data.city.toLowerCase().includes(cityFilter);
+
+      // Return true if all conditions match
+      return matchesName && matchesCategory;
+    };
+
+    return filterFunction;
+  }
+
+  applyFilter(): void {
+    const filterValue = `${this.nameFilter}|${this.categoryFilter}`;
+    console.log(filterValue);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

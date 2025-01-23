@@ -5,22 +5,22 @@
     <div class="card card-app mb-5">
       <div class="card-body">
         <h5 class="card-title">Filtros</h5>
-        <div class="row m-0">
+        <div class="row m-0 container-form-app">
           <div class="col-12 col-md-6">
             <label for="name" class="form-label">
               Producto
             </label>
-            <input type="text" class="form-control" id="name" (keyup)="filterProducts($event)">
+            <input type="text" class="form-control" id="name" [(ngModel)]="nameFilter" (input)="applyFilter()">
           </div>
           <div class="col-12 col-md-6">
             <label for="category_id" class="form-label">
               Categoria
             </label>
-            <select class="form-select" id="category_id">
-              <option [ngValue]="0" selected>--Seleccione--</option>
-              <!--          @for ( category of categories; track category.id ) {-->
-              <!--            <option [ngValue]="category.id">{{category.name}}</option>-->
-              <!--          }-->
+            <select class="form-select" id="category_id" [(ngModel)]="categoryFilter" (change)="applyFilter()">
+              <option value selected>--Seleccione--</option>
+              @for ( category of categories; track category.id ) {
+                <option [ngValue]="category.id">{{category.name}}</option>
+              }
             </select>
           </div>
         </div>
@@ -42,28 +42,48 @@
           <td mat-cell *matCellDef="let product"> {{product.name}} </td>
         </ng-container>
 
-        <!-- Weight Column -->
+        <!-- Category id Column -->
+        <ng-container matColumnDef="category_id">
+          <th mat-header-cell *matHeaderCellDef> Categoría id </th>
+          <td mat-cell *matCellDef="let product"> {{product.category_id}} </td>
+        </ng-container>
+
+        <!-- Category name Column -->
         <ng-container matColumnDef="category_name">
           <th mat-header-cell *matHeaderCellDef> Categoría </th>
           <td mat-cell *matCellDef="let product"> {{product.category_name}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        <!-- Quantity Column -->
         <ng-container matColumnDef="quantity">
           <th mat-header-cell *matHeaderCellDef> Cantidad </th>
           <td mat-cell *matCellDef="let product"> {{product.quantity}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        <!-- Quantity sold Column -->
         <ng-container matColumnDef="quantity_sold">
           <th mat-header-cell *matHeaderCellDef> Cantidad vendida </th>
           <td mat-cell *matCellDef="let product"> {{product.quantity_sold}} </td>
         </ng-container>
 
-        <!-- Symbol Column -->
+        <!-- Price Column -->
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef> Precio </th>
-          <td mat-cell *matCellDef="let product"> {{product.price}} </td>
+          <td mat-cell *matCellDef="let product"> {{product.price.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}} </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef>
+            <ul class="actions-list">
+              <li>
+                <a class="btn-action">
+                  <i class="fa-solid fa-edit"></i>
+                </a>
+              </li>
+            </ul>
+          </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
