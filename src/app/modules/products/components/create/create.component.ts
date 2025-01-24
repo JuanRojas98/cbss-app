@@ -7,13 +7,16 @@ import {Category, Product} from "@models/product";
 import {SpinnerService} from "@services/spinner.service";
 import {AlertService} from "@services/alert.service";
 import {MatInputModule} from "@angular/material/input";
+import {TableService} from "@shared/services/table.service";
+import {MatDialogContent} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-create',
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogContent
   ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss'
@@ -24,6 +27,7 @@ export class CreateComponent implements OnInit{
   private productService = inject(ProductService);
   private alertService = inject(AlertService);
   private spinnerService = inject(SpinnerService);
+  private tableService = inject(TableService);
 
   categories: Category[] = [];
 

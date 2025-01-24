@@ -90,6 +90,18 @@ body {
       font-family: "Montserrat Bold", sans-serif;
       margin-bottom: 1.2rem;
     }
+
+    .btn-app {
+      font-family: "Montserrat Bold", sans-serif;
+      background-color: $bg-btn;
+      border-color: $border-btn;
+      transition: .3s all;
+
+      &:hover {
+        background-color: $theme-color;
+        transition: .3s all;
+      }
+    }
   }
 }
 
@@ -112,6 +124,13 @@ body {
     font-family: "Montserrat Bold", sans-serif;
     background-color: $bg-btn;
     border-color: $border-btn;
+
+    transition: .3s all;
+
+    &:hover {
+      background-color: $theme-color;
+      transition: .3s all;
+    }
   }
 }
 
@@ -156,6 +175,10 @@ body {
           font-weight: normal;
           text-align: center;
           vertical-align: middle;
+
+          .mat-sort-header-container {
+            justify-content: center;
+          }
 
           //&:first-child {
           //  border-top-left-radius: 1rem;
@@ -217,6 +240,7 @@ body {
       border-radius: 2rem;
       font-size: 0.8rem;
       cursor: pointer;
+      text-decoration: none;
       transition: .3s all;
 
       &:hover {
@@ -272,25 +296,66 @@ body {
   justify-content: space-around;
 }
 
-body.swal2-height-auto {
+.body-app.swal2-height-auto {
   height: 100% !important;
 }
 
 /*
   Popup styles
  */
-.modal-app {
-  .mdc-dialog__container {
-    .mat-mdc-dialog-surface {
-      padding: 1rem;
-      background-color: $white;
-      border-radius: 1rem;
-      width: 100%;
+.mat-mdc-dialog-surface {
+  padding: 1rem;
+  background-color: $white;
+  border-radius: 1rem !important;
+  width: auto;
 
-      @include media-breakpoint-up(mg) {
-        width: 80%;
-      }
+  .modal-title-app {
+    font-family: "Montserrat Bold", sans-serif;
+    color: $black;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    position: relative;
+
+    span {
+      padding-right: 1rem;
+      position: relative;
+      background-color: #ffffff;
+      z-index: 1;
     }
+
+    //&:before {
+    //  position: absolute;
+    //  height: 1px;
+    //  width: 100%;
+    //  background-color: #cfcfcf;
+    //  top: 50%;
+    //
+    //  @include media-breakpoint-up(md) {
+    //    content: "";
+    //  }
+    //}
+
+    @include media-breakpoint-up(md) {
+      font-size: 1.5rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      font-size: 1.8rem;
+    }
+  }
+
+  .mdc-dialog__content {
+    padding: 0.5rem 0 !important;
+  }
+
+  @include media-breakpoint-up(md) {
+    width: 50%;
+    padding: 1.8rem 1.5rem;
+    margin: 0;
+  }
+
+  @include media-breakpoint-up(lg) {
+    width: 70%;
   }
 }
 

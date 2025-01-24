@@ -1,75 +1,28 @@
 <div class="card card-app">
   <div class="card-body">
-    <h2 class="card-title">Categorías</h2>
+    <div class="d-flex justify-content-between align-items-center">
+      <h2 class="card-title">Categorías</h2>
 
-    <div class="card card-app mb-5">
-      <div class="card-body">
-        <h5 class="card-title">Filtros</h5>
-        <div class="row m-0 container-form-app">
-          <div class="col-12">
-            <label for="category_name" class="form-label">
-              Categoría
-            </label>
-            <input type="text" class="form-control" id="category_name" [(ngModel)]="categoryFilter" (input)="applyFilterCategories()">
-          </div>
-        </div>
-      </div>
+      <a class="btn btn-primary btn-app" (click)="newCategory()">Crear categoría</a>
     </div>
 
-    <a class="btn btn-primary" (click)="abrirDialogo()">Abrir dialogo</a>
+<!--    <div class="card card-app mb-5">-->
+<!--      <div class="card-body">-->
+<!--        <h5 class="card-title">Filtros</h5>-->
+<!--        <div class="row m-0 container-form-app">-->
+<!--          <div class="col-12">-->
+<!--            <label for="category_name" class="form-label">-->
+<!--              Categoría-->
+<!--            </label>-->
+<!--            <input type="text" class="form-control" id="category_name" [(ngModel)]="categoryFilter" (input)="applyFilterCategories()">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
-    <div class="table-responsive">
-      <table mat-table [dataSource]="dataSource" class="table table-bordered mb-3">
-
-        <!-- Position Column -->
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef> ID </th>
-          <td mat-cell *matCellDef="let category"> {{category.id}} </td>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Categoría </th>
-          <td mat-cell *matCellDef="let category"> {{category.name}} </td>
-        </ng-container>
-
-        <!-- Category id Column -->
-        <ng-container matColumnDef="total_products">
-          <th mat-header-cell *matHeaderCellDef> Total productos </th>
-          <td mat-cell *matCellDef="let category"> {{category.total_products}} </td>
-        </ng-container>
-
-        <!-- Category name Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef> Estado </th>
-          <td mat-cell *matCellDef="let category">
-            @if (category.status == 1) {
-              <span class="badge text-bg-success">Activo</span>
-            } @else {
-              <span class="badge text-bg-danger">Inactivo</span>
-            }
-          </td>
-        </ng-container>
-
-        <!-- Actions Column -->
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef>
-            <ul class="actions-list">
-              <li>
-                <a class="btn-action">
-                  <i class="fa-solid fa-edit"></i>
-                </a>
-              </li>
-            </ul>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-
-      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
-    </div>
+    @if (categories.length > 0) {
+      <app-table [displayedColumns]="displayedColumns" [headers]="headers" [data]="categories"
+           [sortableColumns]="sortables" (tableAction)="getAction($event)"/>
+    }
   </div>
 </div>

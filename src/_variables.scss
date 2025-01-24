@@ -26,8 +26,8 @@ $theme-color-2: #0d121d;
  */
 $color-label: $black;
 $required-label: $red-dark;
-$bg-btn: #243f52;
-$border-btn: #243f52;
+$bg-btn: $theme-color-2;
+$border-btn: $theme-color-2;
 
 /*
   Transition

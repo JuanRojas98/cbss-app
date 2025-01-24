@@ -1,0 +1,60 @@
+<!--<div class="row m-0 container-form-app">-->
+<!--  <div class="col-12 col-md-6">-->
+<!--    <label for="name" class="form-label">-->
+<!--      Producto-->
+<!--    </label>-->
+<!--    <input type="text" class="form-control" id="name">-->
+<!--  </div>-->
+<!--  <div class="col-12 col-md-6">-->
+<!--    <label for="category_id" class="form-label">-->
+<!--      Categoria-->
+<!--    </label>-->
+<!--    <select class="form-select" id="category_id">-->
+<!--      <option value selected>&#45;&#45;Seleccione&#45;&#45;</option>-->
+<!--    </select>-->
+<!--  </div>-->
+<!--</div>-->
+
+<div class="table-responsive">
+  <table mat-table matSort [dataSource]="dataSource" class="table table-bordered mb-3">
+    @for (column of displayedColumns(); track $index) {
+      <ng-container [matColumnDef]="column">
+        @if (this.sortableColumns().includes(column)) {
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ headers()[$index] }}</th>
+        } @else {
+          <th mat-header-cell *matHeaderCellDef> {{ headers()[$index] }}</th>
+        }
+
+        <td mat-cell *matCellDef="let element">
+          @if (column === 'actions') {
+            <ul class="actions-list">
+              <li>
+                <a class="btn-action" (click)="sendActionTable({action: 'edit', id: element['id']})">
+                  <i class="fa-solid fa-edit"></i>
+                </a>
+              </li>
+              <li>
+                <a class="btn-action" (click)="sendActionTable({action: 'view', id: element['id']})">
+                  <i class="fa-solid fa-eye"></i>
+                </a>
+              </li>
+            </ul>
+          } @else if (column === 'status') {
+            @if (element['status'] === 1) {
+              <span class="badge text-bg-success">Activo</span>
+            } @else {
+              <span class="badge text-bg-danger">Inactivo</span>
+            }
+          } @else {
+            {{ element[column] }}
+          }
+        </td>
+      </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>

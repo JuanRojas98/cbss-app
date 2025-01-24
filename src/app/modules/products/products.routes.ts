@@ -8,10 +8,6 @@ export const productsRoutes: Routes = [
     component: ListComponent
   },
   {
-    path: 'create',
-    component: CreateComponent
-  },
-  {
     path: 'categories',
     children: [
       {

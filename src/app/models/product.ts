@@ -1,3 +1,5 @@
+export type ColumnKeys<T> = Array<keyof T>;
+
 export interface Product {
   id?: number,
   name: string,
@@ -10,7 +12,7 @@ export interface Product {
 }
 
 export interface Category {
-  id: number;
+  id?: number;
   name: string;
   total_products?: number;
   status: number;

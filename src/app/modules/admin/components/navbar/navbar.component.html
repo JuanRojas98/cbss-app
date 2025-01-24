@@ -1,5 +1,17 @@
 <nav class="navbar navbar-expand-lg border-bottom px-4 mb-4 container-fluid">
-  <a class="navbar-brand me-auto" href="#">Navbar</a>
+  <div class="shift-container {{shiftStatus ? 'shift-started' : ''}} me-auto d-flex align-items-center">
+    <a class="btn-shift" (click)="shiftStatus ? closeShift() : startShift()">
+      <i class="fa-solid {{shiftStatus ? 'fa-toggle-on' : 'fa-toggle-off'}}"></i>
+    </a>
+    <p class="status-shift">
+      Estado actual:
+      @if (shiftStatus) {
+        Turno iniciado
+      } @else {
+        Fuera de turno
+      }
+    </p>
+  </div>
   <ul class="navbar-nav mb-0">
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle avatar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

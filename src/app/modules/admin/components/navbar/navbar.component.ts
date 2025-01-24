@@ -11,6 +11,16 @@ import {AuthService} from "@services/auth.service";
 export class NavbarComponent {
   private authService = inject(AuthService);
 
+  shiftStatus = false;
+
+  startShift() {
+    this.shiftStatus = true;
+  }
+
+  closeShift() {
+    this.shiftStatus = false;
+  }
+
   logout() {
     this.authService.logout();
   }

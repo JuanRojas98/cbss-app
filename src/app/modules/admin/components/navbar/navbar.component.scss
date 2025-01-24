@@ -2,7 +2,7 @@
   min-height: calc(4rem + 1px);
   position: sticky;
   top: 0;
-  //z-index: 1020;
+  z-index: 2;
   background-color: #fff;
   //-webkit-box-shadow: 0px 3px 21px 0px rgb(0 0 0 / 20%);
   //box-shadow: 0px 3px 21px 0px rgb(0 0 0 / 20%);
@@ -67,6 +67,30 @@
           }
         }
       }
+    }
+  }
+
+  .shift-container {
+    .btn-shift {
+      font-size: 1.5rem;
+      margin-right: 1rem;
+      color: #bd0c0c;
+      cursor: pointer;
+    }
+
+    .status-shift {
+      margin-bottom: 0;
+      color: #bd0c0c;
+    }
+  }
+
+  .shift-started {
+    .btn-shift {
+      color: #15d064;
+    }
+
+    .status-shift {
+      color: #15d064;
     }
   }
 }

@@ -1,0 +1,42 @@
+<h2 class="modal-title-app">
+  <span>{{getTitle()}}</span>
+</h2>
+
+<mat-dialog-content>
+  <div class="container-form-app">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="row m-0">
+        <div class="col-12 col-md-6 mb-3">
+          <label for="name" class="form-label">
+            Categoría
+            <span class="required">*</span>
+          </label>
+          <input type="text" class="form-control" formControlName="name" id="name" required>
+          @if (categoryForm.get('name')?.touched && categoryForm.get('name')?.hasError('required')) {
+            <span class="error-field">
+                Ingrese el nombre de la categoría.
+            </span>
+          }
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="category_id" class="form-label">
+            Estado
+            <span class="required">*</span>
+          </label>
+          <select class="form-select" id="category_id" formControlName="status" required>
+            <option [ngValue]="1">Activo</option>
+            <option [ngValue]="0">Inactivo</option>
+          </select>
+          @if (categoryForm.get('status')?.touched && categoryForm.get('status')?.hasError('required')) {
+            <span class="error-field">
+                Seleccione un estado.
+            </span>
+          }
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary btn-form-app rounded px-4">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

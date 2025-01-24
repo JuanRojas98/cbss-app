@@ -1,13 +1,16 @@
-import {AfterViewInit, Component, inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, DestroyRef, inject, OnInit, signal, ViewChild} from '@angular/core';
 import {ProductService} from "@services/product.service";
 import {Category, Product} from "@models/product";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
-import {MatSort} from "@angular/material/sort";
-import {TableDataSource} from "../../../../utils/data-source";
 import {AlertService} from "@services/alert.service";
 import {SpinnerService} from "@services/spinner.service";
+import {TableComponent} from "@shared/table/table.component";
+import {Action} from "@shared/models/table";
+import {ModalService} from "@shared/services/modal.service";
+import {TableService} from "@shared/services/table.service";
+import {FormComponent} from "@modules/products/components/form/form.component";
 
 @Component({
   selector: 'app-list',
@@ -16,23 +19,34 @@ import {SpinnerService} from "@services/spinner.service";
     FormsModule,
     ReactiveFormsModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    TableComponent
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
 })
 export class ListComponent implements OnInit{
   private productService = inject(ProductService);
-  private alertService = inject(AlertService);
   private spinnerService = inject(SpinnerService);
+  private modalService = inject(ModalService);
+  private tableService = inject(TableService);
+
+  refreshData = false;
+
+  constructor() {
+    // this.productService.refresh$.subscribe((data: boolean) => {
+    //   setTimeout(() => {
+    //     this.refreshData = data ? data : false;
+    //   });
+    // });
+  }
 
   categories: Category[] = [];
+  products: Product[] = [];
 
-  displayedColumns: string[] = ['id', 'name', 'category_name', 'quantity', 'quantity_sold', 'price', 'actions'];
-  dataSource = new MatTableDataSource<Product>();
-
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+  displayedColumns = ['id', 'name', 'category_name', 'quantity', 'quantity_sold', 'price', 'actions'];
+  headers = ['ID', 'Producto', 'Categoría', 'Cantidad actual', 'Cantidad vendida', 'Precio por unidad', ''];
+  sortables = ['id'];
 
   // Default filter criteria for each field
   nameFilter: string = '';
@@ -40,28 +54,47 @@ export class ListComponent implements OnInit{
 
   ngOnInit() {
     this.spinnerService.showSpinner();
+    this.getProducts();
 
-    this.productService.getCategories().subscribe(
-      (data: Category[]) => {
-        this.categories = data;
-
-        this.productService.getProducts().subscribe(
-          (data: Product[]) => {
-            this.dataSource.data = data;
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.filterPredicate = this.createFilter();
-
-            this.spinnerService.hideSpinner();
-          },
-          (error) => {
-            this.spinnerService.hideSpinner();
-          }
-        );
-      },
-      (error) => {
-        this.spinnerService.hideSpinner();
+    this.tableService.refresh$.subscribe((refresh: boolean) => {
+      if (refresh) {
+        this.getProducts();
       }
-    )
+    });
+  }
+
+  getProducts() {
+    this.productService.getProducts()
+      .subscribe(
+        (data: Product[]) => {
+          this.products = data;
+          this.spinnerService.hideSpinner();
+        },
+        (error) => {
+          this.spinnerService.hideSpinner();
+        }
+      );
+  }
+
+  getAction(actionTable: Action) {
+    switch (actionTable.action) {
+      case 'edit':
+        const product: Product[] = this.products.filter((prod) => prod.id === actionTable.id);
+        this.editForm(product[0]);
+        break;
+      case 'view':
+        break;
+      default:
+        break;
+    }
+  }
+
+  newProduct() {
+    this.modalService.openModal<FormComponent, Product>(FormComponent);
+  }
+
+  editForm(data: Product) {
+    this.modalService.openModal<FormComponent, Product>(FormComponent, data, true);
   }
 
   createFilter(): (data: any, filter: string) => boolean {
@@ -86,6 +119,6 @@ export class ListComponent implements OnInit{
   applyFilter(): void {
     const filterValue = `${this.nameFilter}|${this.categoryFilter}`;
     console.log(filterValue);
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }
