@@ -1,0 +1,76 @@
+<h2 class="modal-title-app">
+  <span>{{ table.name }}</span>
+</h2>
+
+<mat-dialog-content>
+  <div class="row m-0">
+    <div class="col-12 col-md-4">
+      <p class="mb-0 label-info">Estado actual:</p>
+      <p class="field-info mb-0">Disponible</p>
+    </div>
+    <div class="col-12 col-md-4">
+      <p class="mb-0 label-info">Atendido por:</p>
+      <p class="field-info mb-0">Disponible</p>
+    </div>
+    <div class="col-12 col-md-4">
+      <p class="mb-0 label-info">Estado actual:</p>
+      <p class="field-info mb-0">Disponible</p>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="container-form-app">
+    <div class="row m-0">
+      <div class="col-12 col-md-4">
+        <label for="product_id" class="form-label">
+          Producto
+          <span class="required">*</span>
+        </label>
+        <select class="form-select" id="product_id" formControlName="product_id" required>
+          <option value selected>--Seleccione--</option>
+<!--          @for (category of categories; track category.id) {-->
+<!--            <option [ngValue]="category.id">{{ category.name }}</option>-->
+<!--          }-->
+        </select>
+      </div>
+      <div class="col-12 col-md-3">
+        <label for="quantity" class="form-label">
+          Cantidad
+          <span class="required">*</span>
+        </label>
+        <input type="number" class="form-control" id="quantity" formControlName="quantity" min="1" required>
+      </div>
+      <div class="col-12 col-md-3">
+        <label for="quantity" class="form-label">
+          Precio total
+        </label>
+        <input type="number" class="form-control" id="price_total" min="1" disabled>
+      </div>
+      <div class="col-12 col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary btn-form-app rounded px-4">Agregar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-4">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Valor total producto</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Aguila</td>
+          <td>10</td>
+          <td>35000</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</mat-dialog-content>

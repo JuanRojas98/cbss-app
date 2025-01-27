@@ -3,8 +3,8 @@ import {SidebarComponent} from "@modules/admin/components/sidebar/sidebar.compon
 import {NavbarComponent} from "@modules/admin/components/navbar/navbar.component";
 import {FooterComponent} from "@modules/admin/components/footer/footer.component";
 import {RouterOutlet} from "@angular/router";
-import {SpinnerService} from "@services/spinner.service";
-import {SpinnerComponent} from "../../../../shared/spinner/spinner.component";
+import {SpinnerService} from "@shared/services/spinner.service";
+import {SpinnerComponent} from "@shared/components/spinner/spinner.component";
 
 @Component({
   selector: 'app-layout',
@@ -14,6 +14,7 @@ import {SpinnerComponent} from "../../../../shared/spinner/spinner.component";
     NavbarComponent,
     FooterComponent,
     RouterOutlet,
+    SpinnerComponent,
     SpinnerComponent
   ],
   templateUrl: './layout.component.html',

@@ -4,6 +4,7 @@ export const salesRoutes: Routes = [
   {
     path: '',
     redirectTo: 'map',
+    pathMatch: 'full'
   },
   {
     path: 'map',

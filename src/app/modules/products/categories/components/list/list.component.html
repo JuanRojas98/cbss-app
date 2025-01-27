@@ -21,8 +21,8 @@
 <!--    </div>-->
 
     @if (categories.length > 0) {
-      <app-table [displayedColumns]="displayedColumns" [headers]="headers" [data]="categories"
-           [sortableColumns]="sortables" (tableAction)="getAction($event)"/>
+      <app-grid [displayedColumns]="displayedColumns" [headers]="headers" [data]="categories"
+           [sortableColumns]="sortables" (gridAction)="getAction($event)"/>
     }
   </div>
 </div>

@@ -145,6 +145,16 @@ body {
   border: 1px solid $red-custom; /* red */
 }
 
+.label-info {
+  font-family: "Montserrat Bold", sans-serif;
+  color: $color-label;
+  font-size: 0.9rem;
+}
+
+.field-info {
+  color: $color-label;
+}
+
 /*
   Table styles
  */
@@ -175,6 +185,7 @@ body {
           font-weight: normal;
           text-align: center;
           vertical-align: middle;
+          background: $theme-color-2 !important;
 
           .mat-sort-header-container {
             justify-content: center;
@@ -357,6 +368,19 @@ body {
   @include media-breakpoint-up(lg) {
     width: 70%;
   }
+}
+
+.cdk-overlay-pane {
+  width: 100% !important;
+
+  @include media-breakpoint-up(md) {
+    width: fit-content !important;
+    min-width: 60% !important;
+  }
+
+  //@include media-breakpoint-up(lg) {
+  //  width: 60% !important;
+  //}
 }
 
 .custom-loader {

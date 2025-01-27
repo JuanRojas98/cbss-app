@@ -42,6 +42,10 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
+  getUser() {
+    return localStorage.getItem('user');
+  }
+
   logout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');

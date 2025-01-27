@@ -2,10 +2,10 @@ import {Component, inject} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogContent} from "@angular/material/dialog";
 import {ProductService} from "@services/product.service";
-import {AlertService} from "@services/alert.service";
+import {AlertService} from "@shared/services/alert.service";
 import {ModalService} from "@shared/services/modal.service";
-import {TableService} from "@shared/services/table.service";
 import {Category, Product} from "@models/product";
+import {GridService} from "@shared/services/grid.service";
 
 @Component({
   selector: 'app-form',
@@ -24,7 +24,7 @@ export class FormComponent {
   private productService = inject(ProductService);
   private alertService = inject(AlertService);
   private modalService = inject(ModalService);
-  private tableService = inject(TableService);
+  private gridService = inject(GridService);
 
   categories: Category[] = [];
 
@@ -57,7 +57,7 @@ export class FormComponent {
             this.modalService.closeModal();
             this.productForm.reset();
 
-            this.tableService.refreshTable();
+            this.gridService.refreshGrid();
           }
         );
       }
@@ -68,7 +68,7 @@ export class FormComponent {
             this.modalService.closeModal();
             this.productForm.reset();
 
-            this.tableService.refreshTable();
+            this.gridService.refreshGrid();
           }
         );
       }

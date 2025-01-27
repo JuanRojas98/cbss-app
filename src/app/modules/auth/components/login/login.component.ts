@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {AuthService} from "@services/auth.service";
 import {User} from "@models/user";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {AlertService} from "@services/alert.service";
+import {AlertService} from "@shared/services/alert.service";
 
 @Component({
   selector: 'app-login',

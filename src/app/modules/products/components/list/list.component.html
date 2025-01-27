@@ -32,8 +32,8 @@
 <!--    </div>-->
 
     @if (products.length > 0) {
-      <app-table [displayedColumns]="displayedColumns" [headers]="headers" [data]="products"
-         [sortableColumns]="sortables" (tableAction)="getAction($event)"/>
+      <app-grid [displayedColumns]="displayedColumns" [headers]="headers" [data]="products"
+         [sortableColumns]="sortables" (gridAction)="getAction($event)"/>
     }
   </div>
 </div>

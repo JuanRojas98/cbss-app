@@ -4,12 +4,12 @@ import {Category, Product} from "@models/product";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
-import {AlertService} from "@services/alert.service";
-import {SpinnerService} from "@services/spinner.service";
-import {TableComponent} from "@shared/table/table.component";
-import {Action} from "@shared/models/table";
+import {AlertService} from "@shared/services/alert.service";
+import {SpinnerService} from "@shared/services/spinner.service";
+import {GridComponent} from "@shared/components/grid/grid.component";
+import {Action} from "@shared/models/grid";
 import {ModalService} from "@shared/services/modal.service";
-import {TableService} from "@shared/services/table.service";
+import {GridService} from "@shared/services/grid.service";
 import {FormComponent} from "@modules/products/components/form/form.component";
 
 @Component({
@@ -20,7 +20,7 @@ import {FormComponent} from "@modules/products/components/form/form.component";
     ReactiveFormsModule,
     MatPaginatorModule,
     MatTableModule,
-    TableComponent
+    GridComponent
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -29,16 +29,11 @@ export class ListComponent implements OnInit{
   private productService = inject(ProductService);
   private spinnerService = inject(SpinnerService);
   private modalService = inject(ModalService);
-  private tableService = inject(TableService);
+  private gridService = inject(GridService);
 
   refreshData = false;
 
   constructor() {
-    // this.productService.refresh$.subscribe((data: boolean) => {
-    //   setTimeout(() => {
-    //     this.refreshData = data ? data : false;
-    //   });
-    // });
   }
 
   categories: Category[] = [];
@@ -56,7 +51,7 @@ export class ListComponent implements OnInit{
     this.spinnerService.showSpinner();
     this.getProducts();
 
-    this.tableService.refresh$.subscribe((refresh: boolean) => {
+    this.gridService.refresh$.subscribe((refresh: boolean) => {
       if (refresh) {
         this.getProducts();
       }

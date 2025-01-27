@@ -1,1 +1,139 @@
-<p>map works!</p>
+<div class="card card-app">
+  <div class="card-body">
+    <div class="container-map {{!enableMap ? 'disable-map' : ''}}">
+      <div class="d-flex">
+        <div class="left-block d-flex flex-column pe-0">
+          <div class="top-block d-flex">
+            <div style="width: 400px">
+              <div class="w-100 d-flex justify-content-around align-items-center" style="height: 200px">
+                <div style="width: 20%"></div>
+                <div class="d-flex justify-content-center" style="width: 80%">
+                  @for (table of tables; track $index) {
+                    @if ($index == 0) {
+                      <div class="table-container">
+                        <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                          <span class="table-index">{{table.id}}</span>
+                        </a>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+              <div class="w-100 d-flex align-items-center">
+                <div style="width: 20%">
+                  <div class="column me-5"></div>
+                </div>
+                <div class="d-flex justify-content-around" style="width: 80%;">
+                  @for (table of tables; track $index) {
+                    @if ($index >= 1 && $index <= 2) {
+                      <div class="table-container">
+                        <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                          <span class="table-index">{{table.id}}</span>
+                        </a>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            </div>
+            <div style="width: 600px">
+              <div class="w-100 d-flex justify-content-center" style="height: 200px">
+                <div class="empty-block w-100" style="height: 150px"></div>
+              </div>
+              <div class="w-100 d-flex justify-content-around">
+                <div class="d-flex align-items-center justify-content-around" style="width: 65%;">
+                  <div style="width: 20%">
+                    <div class="column"></div>
+                  </div>
+                  <div class="d-flex justify-content-around" style="width: 80%">
+                    @for (table of tables; track $index) {
+                      @if ($index >= 3 && $index <= 4) {
+                        <div class="table-container">
+                          <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                            <span class="table-index">{{table.id}}</span>
+                          </a>
+                        </div>
+                      }
+                    }
+                  </div>
+                </div>
+                <div class="d-flex align-items-center" style="width: 35%;">
+                  <div class="column me-5"></div>
+                  @for (table of tables; track $index) {
+                    @if ($index == 5) {
+                      <div class="table-container">
+                        <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                          <span class="table-index">{{table.id}}</span>
+                        </a>
+                      </div>
+                    }
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-block d-flex" style="height: 250px">
+            <div style="width: 400px">
+              <div class="w-100 d-flex align-items-end justify-content-around h-100">
+                <div style="width: 20%"></div>
+                <div class="d-flex justify-content-around" style="width: 80%;">
+                  <div class="game-container">
+                  </div>
+                  <div class="game-container">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="width: 600px;">
+              <div class="w-100 d-flex align-items-end justify-content-around h-100">
+                <div class="d-flex justify-content-center" style="width: 65%">
+                  <div style="width: 20%;"></div>
+                  <div class="d-flex justify-content-around" style="width: 80%;">
+                    <div class="game-container">
+                    </div>
+                    <div class="game-container">
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-around" style="width: 35%">
+                  <div class="game-container">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="middle-block p-0">
+          <div class="empty-block" style="width: 150px;height: 70%"></div>
+        </div>
+        <div class="right-block">
+          <div class="top-block d-flex flex-column justify-content-center" style="height: 300px; padding-left: 5rem">
+            <div class="w-100 d-flex justify-content-around mb-5">
+              @for (table of tables; track $index) {
+                @if ($index >= 6 && $index <= 11) {
+                  <div class="table-container me-5">
+                    <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                      <span class="table-index">{{table.id}}</span>
+                    </a>
+                  </div>
+                }
+              }
+            </div>
+            <div class="w-100 d-flex justify-content-around mt-5">
+              @for (table of tables; track $index) {
+                @if ($index >= 12 && $index <= 17) {
+                  <div class="table-container me-5">
+                    <a class="table-link {{table.available == 1 ? 'table-available': 'table-busy'}}" (click)="openSalesTable(table)">
+                      <span class="table-index">{{table.id}}</span>
+                    </a>
+                  </div>
+                }
+              }
+            </div>
+          </div>
+          <div class="bottom-block"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

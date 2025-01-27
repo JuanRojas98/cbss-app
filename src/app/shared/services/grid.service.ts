@@ -3,18 +3,18 @@ import {EventEmitter, Injectable} from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class TableService {
+export class GridService {
   public refresh$: EventEmitter<boolean>;
 
   constructor() {
     this.refresh$ = new EventEmitter<boolean>();
   }
 
-  refreshTable() {
+  refreshGrid() {
     this.refresh$.next(true);
   }
 
-  unRefreshTable() {
+  unRefreshGrid() {
     this.refresh$.next(false);
   }
 }

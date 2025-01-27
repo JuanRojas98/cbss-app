@@ -1,13 +1,12 @@
 import {Component, inject, OnChanges, OnInit} from '@angular/core';
 import {FormsModule} from "@angular/forms";
 import {ProductService} from "@services/product.service";
-import {AlertService} from "@services/alert.service";
-import {SpinnerService} from "@services/spinner.service";
+import {SpinnerService} from "@shared/services/spinner.service";
 import {Category} from "@models/product";
 import {ModalService} from "@shared/services/modal.service";
-import {TableComponent} from "@shared/table/table.component";
-import {Action} from "@shared/models/table";
-import {TableService} from "@shared/services/table.service";
+import {GridComponent} from "@shared/components/grid/grid.component";
+import {Action} from "@shared/models/grid";
+import {GridService} from "@shared/services/grid.service";
 import {FormComponent} from "@modules/products/categories/components/form/form.component";
 
 @Component({
@@ -15,7 +14,7 @@ import {FormComponent} from "@modules/products/categories/components/form/form.c
   standalone: true,
   imports: [
     FormsModule,
-    TableComponent
+    GridComponent
   ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss'
@@ -24,12 +23,12 @@ export class ListComponent implements OnInit {
   private productService = inject(ProductService);
   private spinnerService = inject(SpinnerService);
   private modalService = inject(ModalService);
-  private tableService = inject(TableService);
+  private gridService = inject(GridService);
 
   refreshData = false;
 
   constructor() {
-    this.tableService.refresh$.subscribe((data: boolean) => {
+    this.gridService.refresh$.subscribe((data: boolean) => {
       setTimeout(() => {
         this.refreshData = data ? data : false;
       });
@@ -50,7 +49,7 @@ export class ListComponent implements OnInit {
     this.spinnerService.showSpinner();
     this.getCategories();
 
-    this.tableService.refresh$.subscribe((refresh: boolean) => {
+    this.gridService.refresh$.subscribe((refresh: boolean) => {
       if (refresh) {
         this.getCategories();
       }

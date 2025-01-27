@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ModalService } from './modal.service';
+import { ShiftService } from './shift.service';
 
-describe('ModalService', () => {
-  let service: ModalService;
+describe('ShiftService', () => {
+  let service: ShiftService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ModalService);
+    service = TestBed.inject(ShiftService);
   });
 
   it('should be created', () => {
