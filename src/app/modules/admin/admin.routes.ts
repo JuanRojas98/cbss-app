@@ -16,6 +16,11 @@ export const adminRoutes: Routes = [
         path: 'products',
         loadChildren: () => import('./../products/products.routes').then(m => m.productsRoutes),
         title: 'CBSS - Productos'
+      },
+      {
+        path: 'sales',
+        loadChildren: () => import('./../sales/sales.routes').then(m => m.salesRoutes),
+        title: 'CBSS - Ventas'
       }
     ]
   }

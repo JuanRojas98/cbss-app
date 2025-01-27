@@ -7,12 +7,12 @@
         </a>
       </li>
       <li class="sidebar-nav-menu-item parent-submenu">
-        <a class="sidebar-nav-menu-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <a class="sidebar-nav-menu-link collapsed" data-bs-toggle="collapse" data-bs-target="#submenuProducts" aria-expanded="false" aria-controls="submenuProducts">
           <i class="fas fa-dolly-flatbed icon"></i>
           Productos
           <i class="fas fa-angle-left icon-toggle-submenu"></i>
         </a>
-        <ul id="collapseOne" class="sidebar-nav-submenu collapse" data-bs-parent="#accordionMenu">
+        <ul id="submenuProducts" class="sidebar-nav-submenu collapse" data-bs-parent="#accordionMenu">
           <li class="sidebar-nav-submenu-item">
             <a routerLink="/admin/products/categories" class="sidebar-nav-submenu-link">
               <span class="icon">C</span>
@@ -33,11 +33,20 @@
           Usuarios
         </a>
       </li>
-      <li class="sidebar-nav-menu-item">
-        <a class="sidebar-nav-menu-link">
+      <li class="sidebar-nav-menu-item parent-submenu">
+        <a class="sidebar-nav-menu-link collapsed" data-bs-toggle="collapse" data-bs-target="#submenuSales" aria-expanded="false" aria-controls="submenuSales">
           <i class="fa-solid fa-money-check-dollar icon"></i>
           Ventas
+          <i class="fas fa-angle-left icon-toggle-submenu"></i>
         </a>
+        <ul id="submenuSales" class="sidebar-nav-submenu collapse" data-bs-parent="#accordionMenu">
+          <li class="sidebar-nav-submenu-item">
+            <a routerLink="/admin/sales/map" class="sidebar-nav-submenu-link">
+              <span class="icon">M</span>
+              Mapa
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
 </div>
