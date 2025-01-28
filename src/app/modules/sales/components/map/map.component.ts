@@ -31,7 +31,6 @@ export class MapComponent implements OnInit{
     this.saleService.getTables().subscribe(
       (data: Table[]) => {
         this.tables = data;
-        console.log(this.tables);
 
         if (currentShift) {
           this.enableMap = true;
