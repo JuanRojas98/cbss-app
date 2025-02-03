@@ -312,7 +312,7 @@ body {
 }
 
 /*
-  Popup styles
+  Modal styles
  */
 .mat-mdc-dialog-surface {
   padding: 1rem;
@@ -370,17 +370,21 @@ body {
   }
 }
 
-.cdk-overlay-pane {
-  width: 100% !important;
+.cdk-overlay-container {
+  .cdk-global-overlay-wrapper {
+    .cdk-overlay-pane {
+      width: 100% !important;
 
-  @include media-breakpoint-up(md) {
-    width: fit-content !important;
-    min-width: 60% !important;
+      @include media-breakpoint-up(md) {
+        width: fit-content !important;
+        min-width: 60% !important;
+      }
+
+      //@include media-breakpoint-up(lg) {
+      //  width: 60% !important;
+      //}
+    }
   }
-
-  //@include media-breakpoint-up(lg) {
-  //  width: 60% !important;
-  //}
 }
 
 .custom-loader {

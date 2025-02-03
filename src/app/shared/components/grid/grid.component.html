@@ -45,6 +45,8 @@
             } @else {
               <span class="badge text-bg-danger">Inactivo</span>
             }
+          } @else if (column === 'price') {
+            {{ element[column].toLocaleString("es-CO", {style: 'currency', currency: 'COP', maximumFractionDigits: 0}) }}
           } @else {
             {{ element[column] }}
           }

@@ -22,72 +22,89 @@
 
   <hr class="my-4">
 
-  <form [formGroup]="saleForm" novalidate>
-    <div class="container-form-app">
-      <form [formGroup]="productsListForm" novalidate (submit)="addProductToList()">
-        <div class="row m-0">
-          <div class="col-12 col-md-5">
-            <label for="id" class="form-label">
-              Producto
-              <span class="required">*</span>
-            </label>
-            <select class="form-select" id="id" formControlName="id" required>
-              <option value="" selected>--Seleccione--</option>
-              @for (product of products; track $index) {
-                <option [ngValue]="product.id">{{ product.name + ' - Disponible: ' + product.quantity }}</option>
-              }
-            </select>
-            @if (productsListForm.get('id')?.touched && productsListForm.get('id')?.hasError('required')) {
-              <span class="error-field">
-                Seleccione un producto.
-              </span>
-            }
-          </div>
-          <div class="col-12 col-md-5">
-            <label for="quantity" class="form-label">
-              Cantidad
-              <span class="required">*</span>
-            </label>
-            <input type="number" class="form-control" id="quantity" formControlName="quantity" min="1" required>
-            @if (productsListForm.get('quantity')?.touched && productsListForm.get('quantity')?.hasError('required')) {
-              <span class="error-field">
-                Ingrese una cantidad.
-              </span>
-            }
-            @if (productsListForm.get('quantity')?.touched && productsListForm.get('quantity')?.hasError('min')) {
-              <span class="error-field">
-                Minimo de 1 en adelante.
-              </span>
-            }
-          </div>
-          <div class="col-12 col-md-2 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary btn-form-app rounded px-4">Agregar</button>
+  <div class="container-form-app px-3">
+    <form [formGroup]="saleForm" novalidate (submit)="save()">
+      <div class="card card-app mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Productos</h4>
+
+          <form [formGroup]="productForm" (submit)="addProduct()">
+            <div class="row m-0">
+              <div class="col-12 col-md-4">
+                <label for="id" class="form-label">
+                  Producto
+<!--                  <span class="required">*</span>-->
+                </label>
+                <select class="form-select" id="id" formControlName="id" required>
+                  <option value="" selected>--Seleccione--</option>
+                  @for (product of products; track $index) {
+                    <option [ngValue]="product.id">{{ product.name}}</option>
+                  }
+                </select>
+              </div>
+              <div class="col-12 col-md-3">
+                <label for="quantity" class="form-label">
+                  Cantidad
+                  <span class="required">*</span>
+                </label>
+                <input type="number" class="form-control" id="quantity" formControlName="quantity" min="1" required (keyup)="totalPriceProduct($event);">
+              </div>
+              <div class="col-12 col-md-3">
+                <label class="form-label">
+                  Precio
+                </label>
+                <p class="fs-4">{{(productForm.value.price ?? 0).toLocaleString("es-CO", {style: 'currency', currency: 'COP', maximumFractionDigits: 0})}}</p>
+              </div>
+              <div class="col-12 col-md-2 d-flex align-items-center">
+                <button type="submit" class="btn btn-primary btn-app">Agregar</button>
+              </div>
+            </div>
+          </form>
+
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of productListDet; track item) {
+                  <tr>
+                    <td>{{item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.price.toLocaleString("es-CO", {style: 'currency', currency: 'COP', maximumFractionDigits: 0})}}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
 
-    <div class="table-responsive mt-4">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Cantidad</th>
-          <th>Valor total producto</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-          @for (product of productsSale; track $index) {
-            <tr>
-              <td>{{ product.id }}</td>
-              <td>{{ getProductName(product.id) }}</td>
-              <td>35000</td>
-              <td></td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </form>
+      <div class="row m-0">
+        <div class="col-12 col-md-6">
+          <label for="state_id" class="form-label">
+            Estado
+            <span class="required">*</span>
+          </label>
+          <select class="form-select" id="state_id" formControlName="state_id" required>
+            <option value="" selected>--Seleccione--</option>
+<!--            @for (product of products; track $index) {-->
+<!--              <option [ngValue]="product.id">{{ product.name}}</option>-->
+<!--            }-->
+          </select>
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label">
+            Total venta
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-form-app rounded px-4 mt-4">Guardar</button>
+    </form>
+  </div>
 </mat-dialog-content>
